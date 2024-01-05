@@ -1,3 +1,10 @@
+# Objective
+
+This project aims to create a tools repository using React.JS, providing custom functions, hooks and components to help on daily tasks for Front-end Web Developers.
+Hooks and Functions are heavily inspired or were created during React.gg course classes, and also inspired by my daily work on ecommerce and selfcare pages for streaming website on LATAM. 
+
+Feel free to reach out to me on caiorleao@gmail.com and www.linkedin.com/in/caio-leao/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
