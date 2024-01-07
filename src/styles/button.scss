@@ -1,0 +1,11 @@
+button {
+    background-color: $main-hover-bg-primary;
+    border: 1px solid $main-border;
+    border-radius: 12px;
+    transition: background-color 0.3s;
+    font-weight: 600;
+    &:hover {
+        background-color: $main-bg-active;
+    }
+
+}
