@@ -17,7 +17,7 @@ function Cpnj() {
 
   return (
     <>
-      <h2 id="cnpj">{cnpj}</h2>
+      <h2 className="hightlight" id="cnpj">{cnpj}</h2>
       <div className="actions">
         <button onClick={handleGenCnpj}>Gerar CNPJ</button>
         <CopyBtn elem="cnpj"/>
@@ -26,4 +26,6 @@ function Cpnj() {
   );
 }
 
-export default Cpnj;
+const MemoizedCpnj = React.memo(Cpnj);
+
+export default MemoizedCpnj;

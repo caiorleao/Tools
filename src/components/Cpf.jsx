@@ -12,11 +12,10 @@ function Cpf() {
 
     return (
         <>
-            <h2 id='cpf'>{cpf}</h2>
+            <h2 className="hightlight" id='cpf'>{cpf}</h2>
             <div className="actions">
                 <button onClick={handleGenCpf}>Gerar CPF</button>
                 <CopyBtn elem="cpf"/>
-
             </div>
         </>
     );

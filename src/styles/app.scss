@@ -1,35 +1,38 @@
-@import './colors.scss';
-@import './generator.scss';
-@import './button.scss';
-@import './input.scss';
+@import "./colors.scss";
+@import "./generator.scss";
+@import "./button.scss";
+@import "./input.scss";
+@import "./form.scss";
+@import "./creditCard.scss";
 
-
-body{
-    background-color: $neutral-bg-active;
-    padding: 0;
-    margin: 0;
-    color: $neutral-text-primary;
-    font-family: 'Roboto Mono', monospace;
+body {
+  background-color: $neutral-bg-active;
+  padding: 0;
+  margin: 0;
+  color: $neutral-text-primary;
+  font-family: "Roboto Mono", monospace;
+}
+h1, h2, h3, h4{
+  text-align: center;
 }
 .header {
-    width: 100%;
-    display: flex;
-    background-color: $main-hover-bg-primary;
-    margin-bottom: 120px;
-    div {
-      flex: 1;
-      text-align: center;
-      padding: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-  
-      &:hover {
-        background-color: $main-bg-active;
-      }
-  
-      &:not(:last-child) {
-        border-right: 1px solid $main-border;
-      }
+  width: 100%;
+  display: flex;
+  background-color: $main-hover-bg-primary;
+  margin-bottom: 120px;
+  div {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $main-bg-active;
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid $main-border;
     }
   }
-
+}

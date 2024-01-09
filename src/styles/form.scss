@@ -1,0 +1,34 @@
+.containerForm {
+    padding: 12px;
+    h1 {
+        text-align: center;
+        font-size: 32px;
+    }
+    form {
+        label {
+            font-size: 12px;
+            display: block;
+        }
+        input {
+            width: 256px;
+            height: 24px;
+            border-radius: 8px;
+            background-color: $neutral-bg-active;
+            transition: background-color 0.5s;
+            transition: border-color 0.5s ease;
+            border: 2px solid transparent;
+            color: $neutral-text-secondary;
+            display: block;
+            ::placeholder {
+                color: $neutral-text-secondary;
+                opacity: 1;
+            }
+            &:hover {
+                border: 2px solid $main-border;
+                background-color: $neutral-hover-bg-active;
+            }
+        }
+    }
+}
+
+    

@@ -8,7 +8,7 @@ function generateCreditCard() {
     const cardNumberWithLuhn = cardNumber + calculateLuhnDigit(cardNumber);
   
     return {
-      number: cardNumberWithLuhn,
+      number: cardNumberWithLuhn.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4'),
       expiration: expirationDate,
       cvv: cvv,
     };

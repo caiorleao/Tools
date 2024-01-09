@@ -1,49 +1,46 @@
 import * as React from "react";
-import cpf from './components/Cpf';
-import cnpj from './components/Cpnj';
-import card from './components/Card';
-
+import Cpf from './components/Cpf';
+import Cnpj from './components/Cpnj';
+import Card from './components/Card';
+import PaymentForm from './components/PaymentMethodForm'
 
 function App() {
-  const CpfComponent = cpf
-  const CnpjComponent = cnpj
-  const CardComponent = card
+  const CpfComponent = React.memo(Cpf);
+  const CnpjComponent = React.memo(Cnpj);
+  const CardComponent = React.memo(Card);
 
   const [tool, setTool] = React.useState('')
-
-
 
   // Função para lidar com a mudança na opção selecionada
   const handleSelectChange = (event) => {
     setTool(event.target.id);
-    console.log('teste')
-    
   };
 
   const renderComponent = () => {
     switch (tool) {
       case 'cpf':
-        return <CpfComponent elem="tool"/>;
+        return <div className="app generator"><CpfComponent elem="tool"/></div>;
       case 'cnpj':
-        return <CnpjComponent elem="tool"/>;
+        return <div className="app generator"><CnpjComponent elem="tool" /></div>;
       case 'card':
-        return <CardComponent elem="tool"/>;
+        return <div className="app generator"><CardComponent elem="tool" /></div>;
+      case 'paymentForm':
+        return <PaymentForm elem="tool" />;
       default:
         return null;
     }
   };
   return (
-  <>
-    <div className="header">
+    <>
+      <div className="header">
         <div onClick={handleSelectChange} id="cpf">CPF</div>
         <div onClick={handleSelectChange} id="cnpj">CNPJ</div>
-        <div onClick={handleSelectChange} id="card">Cartão</div>
-    </div>
-    <div className="app generator">
+        <div onClick={handleSelectChange} id="card">Credit Card</div>
+        <div onClick={handleSelectChange} id="paymentForm">Form</div>
+      </div>
       {renderComponent()}
-    </div>
-  </>
-    
+    </>
+
   );
 }
 

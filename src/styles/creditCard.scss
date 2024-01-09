@@ -1,0 +1,197 @@
+//My Version of Iulia's codepen CreditCard UI https://codepen.io/iulia/pen/wzPxNr
+
+//mixins
+@mixin border-radius($radius) {
+    border-radius: $radius;
+}
+
+// align vetically
+@mixin align-vertical($position) {
+    position: $position;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+// Media queries
+$break-small-portrait: 320px;
+$break-medium-portrait: 480px;
+$break-small-landscape: 750px;
+$break-medium: 1024px;
+$break-large: 1124px;
+
+label {
+    display: block;
+    font-size: 16px;
+    padding: 2px 0;
+    text-transform: uppercase;
+    color: $neutral-text-primary;
+}
+
+.card-number,
+.security-code, 
+.name-holder,
+.card-date {
+    @include border-radius(4px);
+    background: none;
+    color: $neutral-text-primary;
+    font:
+        300 20px/20px Open sans,
+        sans-serif;
+    height: 23px;
+    outline: none;
+    padding: 5px 10px;
+    transition: all 250ms ease-in-out;
+    letter-spacing: 2px;
+    width: 90%;
+}
+
+input {
+    transition: background-color 0.5s;
+    transition: border-color 0.5s ease;
+    border: 2px solid $neutral-border-secondary;
+    color: $neutral-text-secondary;
+    display: block;
+    ::placeholder {
+        color: $neutral-text-secondary;
+        opacity: 1;
+    }
+    &:hover, &:focus {
+        border: 2px solid $main-border;
+    }
+    &[type="submit"] {
+        // Your styling goes here
+        background-color: transparent;
+        color: $neutral-text-primary;
+        padding: 10px 20px;
+        cursor: pointer;
+        border: 2px solid $neutral-border-secondary;
+        &:hover {
+            border: 2px solid $main-border;
+        }
+    }
+}
+
+.security-code, .card-date {
+    float: left;
+    width: 120px;
+}
+
+.security-code:focus {
+    box-shadow: 0 0 0.6rem $main-brand;
+}
+
+.form-group {
+    margin: 20px 0;
+    display: grid
+}
+
+.card {
+    @include border-radius(10px);
+    box-shadow: 0px 4px 25px $main-brand;
+    color: $neutral-text-secondary;
+    height: 400px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    top: 50%;
+    width: 640px;
+}
+
+.card-left-side {
+    background: linear-gradient($neutral-bg-secondary, $neutral-bg-primary);
+    box-sizing: border-box;
+    color: $neutral-text-primary;
+    float: left;
+    font-size: 20px;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+    width: 40%;
+
+    .card-icon {
+        text-align: center;
+        margin: 40px 0 0 0;
+        img {
+            width: 64px;
+        }
+    }
+
+    .card-total,
+    .card-name-holder {
+        margin: 40px 0 0 0;
+
+        p {
+            font-size: 36px;
+            margin: 0;
+        }
+    }
+}
+
+.clear {
+    clear: both;
+}
+
+.row {
+    text-align: center;
+}
+
+.card-right-side {
+    background: linear-gradient($neutral-bg-secondary, $neutral-bg-primary);
+    border-left: 1px solid $main-border;
+    box-sizing: border-box;
+    float: left;
+    height: 100%;
+    padding: 0 0 0 10px;
+    position: relative;
+    width: 60%;
+}
+
+p.test {
+    font-size: 30px;
+    font-weight: 300;
+    margin: 40px 0;
+    opacity: 0.1;
+    width: 100%;
+    float: left;
+}
+
+.security-tooltip {
+    position: relative;
+    z-index: auto;
+    font-family: "Open Sans", sans-serif;
+
+    &::before {
+        @include border-radius(100%);
+        position: relative;
+        color: #496074;
+        top: -26px;
+        left: -4px;
+        font-family: "FontAwesome";
+        content: "\f059";
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        outline: none;
+    }
+}
+
+.security-tooltip:hover:before {
+    width: 200px;
+    height: 10px;
+    padding: 10px;
+    background: #537087;
+    padding: 5px;
+    content: attr(aria-label);
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    display: inline-table;
+    border-radius: 10px;
+    color: #fff;
+    left: 150px;
+    top: -80px;
+    font-size: 14px;
+    line-height: 18px;
+    font-family: "Open Sans", sans-serif;
+}
