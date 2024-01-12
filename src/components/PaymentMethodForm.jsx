@@ -5,28 +5,33 @@ const initialCardData = {
     cvv: '',
     expDate: '',
     brand: 'Not Specified',
-    brandImg: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/generic.svg'
+    brandImg: process.env.PUBLIC_URL + '/imgs/generic.png'
 };
 
 function PaymentMethodForm(props) {
     const [cardData, setCardData] = React.useState(initialCardData);
 
-    function getBrand(number){
+    function validateFormFields(inputs) {
+        return Object.values(inputs).some(value => value == null || value === '');
+    }
+    function getBrand(number) {
         var cardBrands = [
-            { regex: /^4[0-9]{12}(?:[0-9]{3})?$/, name: "Visa", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/visa.svg'},
-            { regex: /^5[1-5][0-9]{14}$/, name: "MasterCard", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/mastercard.svg'},
-            { regex: /^3[47][0-9]{13}$/, name: "American Express", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/amex.svg'},
-            { regex: /^(6011|65|64[4-9])\d{12}|(62[0-9]{14})$/, name: "Discover", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/discover.svg'},
-            { regex: /^(50|5[6-9]|5[0-5])[0-9]{10,17}$/, name: "Maestro", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/maestro.svg'},
-            { regex: /^(30|36|38|39)[0-9]{12}$/, name: "Diners Club", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/diners.svg'},
-            { regex: /^35[0-9]{14}$/, name: "JCB", img: 'https://github.com/caiorleao/Tools/blob/Master/src/imgs/jcb.svg'}
-        ];
-    
+
+
+            { regex: /^4[0-9]{12}(?:[0-9]{3})?$/, name: "Visa", img: process.env.PUBLIC_URL + '/imgs/visa.png' },
+            { regex: /^5[1-5][0-9]{14}$/, name: "MasterCard", img: process.env.PUBLIC_URL + '/imgs/mastercard.png' },
+            { regex: /^3[47][0-9]{13}$/, name: "American Express", img: process.env.PUBLIC_URL + '/imgs/amex.png' },
+            { regex: /^(6011|65|64[4-9])\d{12}|(62[0-9]{14})$/, name: "Discover", img: process.env.PUBLIC_URL + '/imgs/discover.png' },
+            { regex: /^(50|5[6-9]|5[0-5])[0-9]{10,17}$/, name: "Maestro", img: process.env.PUBLIC_URL + '/imgs/maestro.png' },
+            { regex: /^(30|36|38|39)[0-9]{12}$/, name: "Diners Club", img: process.env.PUBLIC_URL + '/imgs/diners.png' },
+            { regex: /^35[0-9]{14}$/, name: "JCB", img: process.env.PUBLIC_URL + '/imgs/jcb.png' }
+        ]
+
         // Optimized loop using `find` to find the first match
-        var foundBrand = cardBrands.find(function(brand) {
-            return brand.regex.test(number);
+        var foundBrand = cardBrands.find(function (brand) {
+            return brand.regex.test(number.replace(/\s/g, ''));
         });
-        
+
         return foundBrand ? setCardData({
             ...cardData,
             'brand': foundBrand.name,
@@ -39,11 +44,10 @@ function PaymentMethodForm(props) {
         setCardData({
             ...cardData,
             [name]: value
-        }); 
+        });
     }
 
     function formatCardNumber(value) {
-        getBrand(value)
         return value.replace(/\D/g, '').replace(/....(?!$)/g, '$& ');
     }
 
@@ -54,12 +58,11 @@ function PaymentMethodForm(props) {
     function formatCvv(value) {
         return value.replace(/\D/g, '').slice(0, 4);
     }
-
     return (
         <>
             <h1>Payment Method Form</h1>
             <div className="creditCard">
-                <form className="card" action="/processar_pagamento" method="post">
+                <form className="card" method="post">
                     <div className="card-left-side">
                         <div className="card-icon">
                             <img src={cardData.brandImg} alt={cardData.brand} />
@@ -68,7 +71,7 @@ function PaymentMethodForm(props) {
                             <label>Total</label>
                             <p className="total">$437.00</p>
                         </div>
-                    </div> 
+                    </div>
                     <div className="card-right-side">
                         <div className="form-group">
                             <label htmlFor="card-name-holder">Name</label>
@@ -81,6 +84,7 @@ function PaymentMethodForm(props) {
                                 placeholder="John Doe"
                                 name="name"
                             />
+                            <span className="error-message" style={{ color: 'red' }} hidden={validateFormFields(cardData)}>Invalid card holder name</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="card-number">Card number</label>
@@ -89,13 +93,14 @@ function PaymentMethodForm(props) {
                                 id="card-number"
                                 className="card-number"
                                 onChange={(e) => handleChange({ target: { name: 'number', value: formatCardNumber(e.target.value) } })}
+                                onBlur={(e) => getBrand(e.target.value)}
                                 value={formatCardNumber(cardData.number)}
-                                maxlength="19"
+                                maxLength="19"
                                 placeholder="4020 3528 1319 03266"
                                 name="number"
                             />
                             {/* Display error message if pattern is not matched */}
-                            <span className="error-message" style={{ color: 'red' }} hidden={!cardData.number.match(/\d{16}/)}>Invalid card number</span>
+                            <span className="error-message" style={{ color: 'red' }} hidden={validateFormFields(cardData)}>Invalid card number</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="card-date">Expiration date</label>
@@ -105,12 +110,12 @@ function PaymentMethodForm(props) {
                                 className="card-date"
                                 onChange={(e) => handleChange({ target: { name: 'expDate', value: formatExpDate(e.target.value) } })}
                                 value={formatExpDate(cardData.expDate)}
-                                maxlength="5"
+                                maxLength="5"
                                 placeholder="01/25"
                                 name="expDate"
                             />
                             {/* Display error message if pattern is not matched */}
-                            <span className="error-message" style={{ color: 'red' }} hidden={!cardData.expDate.match(/\d{4}/)}>Invalid expiration date</span>
+                            <span className="error-message" style={{ color: 'red' }} hidden={validateFormFields(cardData)}>Invalid expiration date</span>
                             <label htmlFor="security-code">Security code</label>
                             <input
                                 type="text"
@@ -118,12 +123,12 @@ function PaymentMethodForm(props) {
                                 className="security-code"
                                 onChange={(e) => handleChange({ target: { name: 'cvv', value: formatCvv(e.target.value) } })}
                                 value={formatCvv(cardData.cvv)}
-                                maxlength="4"
+                                maxLength="4"
                                 placeholder="777"
-                                name="cvv" 
+                                name="cvv"
                             />
                             {/* Display error message if pattern is not matched */}
-                            <span className="error-message" style={{ color: 'red' }} hidden={!cardData.cvv.match(/\d{3}/)}>Invalid CVV</span>
+                            <span className="error-message" style={{ color: 'red' }} hidden={validateFormFields(cardData)}>Invalid CVV</span>
                         </div>
                         <input type="submit" placeholder="Save" name="submit" className="submit" />
                     </div>
